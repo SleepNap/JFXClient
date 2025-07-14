@@ -1,0 +1,2 @@
+# JFXAIClient
+JavaFX AI client
