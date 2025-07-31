@@ -2,9 +2,11 @@ package org.jc.ui.view;
 
 import org.jc.core.auth.AuthManager;
 import org.jc.core.config.ConfigManager;
+import org.jc.core.database.DatabaseManager;
 
 public class AppManager {
     private static AppManager instance;
+    private Thread startThread;
 
     private AppManager() {
         initialize();
@@ -22,8 +24,10 @@ public class AppManager {
     }
 
     public void beforeStart() {
-        ConfigManager.getInstance().loadStartConfig();
-
+        startThread = Thread.startVirtualThread(() -> {
+            ConfigManager.getInstance().loadStartConfig();
+            DatabaseManager.getInstance().initDataSource();
+        });
     }
 
     public void starting() {
@@ -34,5 +38,13 @@ public class AppManager {
         if (!AuthManager.getInstance().isAuthenticated()) {
 
         }
+    }
+
+    public void beforeStop() {
+        if (startThread.isAlive()) {
+            startThread.interrupt();
+        }
+        DatabaseManager.getInstance().stopDatabase();
+        System.exit(0);
     }
 }

@@ -1,7 +1,19 @@
 package org.jc.core.config;
 
+import com.alibaba.fastjson2.JSONObject;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.yaml.snakeyaml.Yaml;
+
+import java.io.File;
+import java.io.FileReader;
+
+@Slf4j
+@Data
 public class ConfigManager {
     private static ConfigManager instance;
+    private File configFile;
+    private StartConfig startConfig;
 
     private ConfigManager() {
         initialize();
@@ -15,11 +27,38 @@ public class ConfigManager {
     }
 
     private void initialize() {
-
+        // 如果后续有需要可以在这里添加从其他地方加载启动配置
+        configFile = new File("application.yml");
     }
 
     public void loadStartConfig() {
+        if (!configFile.exists()) {
+            loadDefaultConfig();
+            return;
+        }
+        try {
+            Yaml yaml = new Yaml();
+            JSONObject jsonObject = yaml.loadAs(new FileReader(configFile), JSONObject.class);
+            startConfig = jsonObject.getJSONObject("jc").to(StartConfig.class);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        if (startConfig == null) {
+            loadDefaultConfig();
+        }
+    }
 
+    private void loadDefaultConfig() {
+        startConfig = StartConfig.builder()
+                .db(StartDatabaseConfig.builder()
+                        .remote(false)
+                        .path("database/pgsql")
+                        .url("jdbc:postgresql://localhost:5432/jfxclient")
+                        .username("root")
+                        .password("root")
+                        .build())
+                .build();
     }
 
     public void loadContextConfig() {

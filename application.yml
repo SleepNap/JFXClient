@@ -1,0 +1,12 @@
+jc:
+  db:
+    # 是否使用远程数据库，可省略，默认false使用本地pg数据库
+    remote: false
+    # pg数据库路径，可省略，默认为database/pgsql，注意这里是pg路径不是zip压缩包路径
+    path: database/pgsql
+    # 数据库连接URL，可省略，默认本地pg连接
+    url: jdbc:postgresql://localhost:5432/jfxclient
+    # 数据库用户名，可省略，默认root
+    username: root
+    # 数据库密码，可省略，默认root
+    password: root
