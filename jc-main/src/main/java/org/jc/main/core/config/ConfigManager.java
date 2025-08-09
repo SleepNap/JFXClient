@@ -1,8 +1,10 @@
-package org.jc.core.config;
+package org.jc.main.core.config;
 
 import com.alibaba.fastjson2.JSONObject;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.jc.common.AppContext;
+import org.jc.common.factory.ConfigFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -14,6 +16,7 @@ public class ConfigManager {
     private static ConfigManager instance;
     private File configFile;
     private StartConfig startConfig;
+    private DefaultConfigService configService;
 
     private ConfigManager() {
         initialize();
@@ -29,6 +32,8 @@ public class ConfigManager {
     private void initialize() {
         // 如果后续有需要可以在这里添加从其他地方加载启动配置
         configFile = new File("application.yml");
+        configService = new DefaultConfigService();
+        AppContext.INSTANCE.configFactory = new ConfigFactory(configService);
     }
 
     public void loadStartConfig() {
@@ -39,6 +44,7 @@ public class ConfigManager {
         try {
             Yaml yaml = new Yaml();
             JSONObject jsonObject = yaml.loadAs(new FileReader(configFile), JSONObject.class);
+            configService.setYmlConfig(jsonObject);
             startConfig = jsonObject.getJSONObject("jc").to(StartConfig.class);
         } catch (Exception e) {
             log.error(e.getMessage());

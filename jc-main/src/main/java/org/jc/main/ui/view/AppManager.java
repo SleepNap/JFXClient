@@ -1,8 +1,9 @@
-package org.jc.ui.view;
+package org.jc.main.ui.view;
 
-import org.jc.core.auth.AuthManager;
-import org.jc.core.config.ConfigManager;
-import org.jc.core.database.DatabaseManager;
+import org.jc.common.exception.UnauthedException;
+import org.jc.main.core.auth.AuthManager;
+import org.jc.main.core.config.ConfigManager;
+import org.jc.main.core.database.DatabaseManager;
 
 public class AppManager {
     private static AppManager instance;
@@ -36,7 +37,7 @@ public class AppManager {
 
     public void afterStart() {
         if (!AuthManager.getInstance().isAuthenticated()) {
-
+            throw new UnauthedException("Not authenticated");
         }
     }
 

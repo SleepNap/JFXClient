@@ -1,4 +1,4 @@
-package org.jc.core.database;
+package org.jc.main.core.database;
 
 import java.io.*;
 
@@ -53,7 +53,6 @@ public class PostgresOperator {
                 if (output == null) {
                     continue;
                 }
-                System.out.println(output);
                 for (String keyword : keywords) {
                     if (output.contains(keyword)) {
                         return true;

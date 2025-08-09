@@ -1,4 +1,4 @@
-package org.jc.core.module;
+package org.jc.main.core.module;
 
 public class ModuleManager {
     private static ModuleManager instance;

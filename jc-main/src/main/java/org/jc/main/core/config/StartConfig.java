@@ -1,4 +1,4 @@
-package org.jc.core.config;
+package org.jc.main.core.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package org.jc.core.update;
+package org.jc.main.core.update;
 
 public class UpdateManager {
     private static UpdateManager instance;

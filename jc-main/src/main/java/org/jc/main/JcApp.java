@@ -1,11 +1,9 @@
-package org.jc;
+package org.jc.main;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.jc.common.AppContext;
-import org.jc.core.auth.AuthManager;
-import org.jc.core.config.ConfigManager;
-import org.jc.ui.view.AppManager;
+import org.jc.main.ui.view.AppManager;
 
 public class JcApp extends Application {
     @Override
@@ -22,6 +20,6 @@ public class JcApp extends Application {
 
     @Override
     public void stop() throws Exception {
-
+        AppManager.getInstance().beforeStop();
     }
 }

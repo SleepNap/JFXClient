@@ -1,4 +1,4 @@
-package org.jc.core.auth;
+package org.jc.main.core.auth;
 
 public class AuthManager {
     private static AuthManager instance;

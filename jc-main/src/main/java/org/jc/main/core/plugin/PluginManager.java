@@ -1,4 +1,4 @@
-package org.jc.core.plugin;
+package org.jc.main.core.plugin;
 
 public class PluginManager {
     private static PluginManager instance;

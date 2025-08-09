@@ -1,4 +1,4 @@
-package org.jc;
+package org.jc.main;
 
 import javafx.application.Application;
 import org.jc.common.AppContext;
