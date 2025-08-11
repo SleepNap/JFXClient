@@ -1,7 +1,5 @@
 package org.jc.main.core.database;
 
-import com.mybatisflex.core.BaseMapper;
-import com.zaxxer.hikari.HikariDataSource;
 import org.jc.common.api.DatabaseInterface;
 
 import javax.sql.DataSource;

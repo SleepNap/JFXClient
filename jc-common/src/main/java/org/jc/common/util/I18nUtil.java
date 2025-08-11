@@ -1,13 +1,18 @@
 package org.jc.common.util;
 
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.jc.common.AppContext;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
 
+@Slf4j
 public class I18nUtil {
+    @Getter
     private static final Map<String, ResourceBundle> bundles = new HashMap<>();
 
     static {
@@ -39,12 +44,31 @@ public class I18nUtil {
         }
         int index = file.getName().indexOf("_");
         String bundleName = file.getName().substring(0, index);
-        ResourceBundle bundle = ResourceBundle.getBundle(bundleName, AppContext.INSTANCE.locale);
+        ResourceBundle bundle;
+        // 自定义i18n资源加载器
+        ResourceBundle.Control control = new ResourceBundle.Control() {
+            @Override
+            public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload) throws IOException {
+                try (InputStream is = new FileInputStream(file)) {
+                    return new PropertyResourceBundle(is);
+                }
+            }
+        };
+        try {
+            bundle = ResourceBundle.getBundle(bundleName, AppContext.INSTANCE.locale, control);
+        } catch (Exception e) {
+            log.error("Error loading locale bundle, trying to use chinese");
+            bundle = ResourceBundle.getBundle(bundleName, Locale.SIMPLIFIED_CHINESE, control);
+        }
         bundles.put(bundleName, bundle);
     }
 
     public static ResourceBundle getBundle(String bundleName) {
         return bundles.get(bundleName);
+    }
+
+    public static Set<String> getBundleNames() {
+        return bundles.keySet();
     }
 
     public static String getString(String key) {
