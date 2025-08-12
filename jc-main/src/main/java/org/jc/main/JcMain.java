@@ -6,6 +6,7 @@ import org.jc.common.AppContext;
 public class JcMain {
     public static void main(String[] args) {
         System.setProperty("prism.allowhidpi", "false");
+        System.setProperty("prism.lcdtext", "false");
         AppContext.INSTANCE.runArgs = args;
         Application.launch(JcApp.class, args);
     }

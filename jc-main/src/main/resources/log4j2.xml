@@ -13,7 +13,7 @@
         <property name="rolling_timeModulate">true</property>
         <property name="console_print_level">DEBUG</property>
         <property name="file_print_level">DEBUG</property>
-        <property name="output_log_level">INFO</property>
+        <property name="output_log_level">DEBUG</property>
     </Properties>
 
     <appenders>

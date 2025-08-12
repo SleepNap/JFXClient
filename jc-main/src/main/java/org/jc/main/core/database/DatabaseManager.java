@@ -63,7 +63,7 @@ public class DatabaseManager {
         }
 
         try {
-            log.debug("未找到pg数据库目录，正在尝试寻找并解压pg压缩包");
+            log.debug("Pg database directory not found, trying to find and unzip pg zip file");
             File zipFile = null;
             for (File file : files) {
                 if (!file.getName().endsWith(".zip")) {
@@ -75,7 +75,7 @@ public class DatabaseManager {
                 throw new RuntimeException("zip file does not exist");
             }
             ZipUtil.unzip(zipFile, parentDir);
-            log.debug("pg数据库目录解压完成");
+            log.debug("Pg database directory unzipped successfully");
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e);
@@ -86,7 +86,7 @@ public class DatabaseManager {
     }
 
     public void startDatabase() {
-        log.debug("正在启动pg数据库");
+        log.debug("Starting pg database");
         try {
             boolean started = PostgresOperator.startPG(databaseDir);
             if (!started) {
@@ -96,11 +96,11 @@ public class DatabaseManager {
             log.error(e.getMessage());
             throw new RuntimeException(e);
         }
-        log.debug("pg数据库启动完成");
+        log.debug("Pg database started");
     }
 
     public void stopDatabase() {
-        log.debug("正在关闭pg数据库");
+        log.debug("Stopping pg database");
         try {
             boolean stopped = PostgresOperator.stopPG(databaseDir);
             if (!stopped) {
@@ -110,7 +110,7 @@ public class DatabaseManager {
             log.error(e.getMessage());
             throw new RuntimeException(e);
         }
-        log.debug("pg数据库关闭完成");
+        log.debug("Pg database stopped");
     }
 
     public void initDataSource() {
@@ -153,7 +153,7 @@ public class DatabaseManager {
             }
             String createDbSQL = "create database " + oriDbName;
             stmt.executeUpdate(createDbSQL);
-            log.debug("数据库 {} 创建成功", oriDbName);
+            log.debug("Pg database {} created successfully", oriDbName);
         } catch (Exception e) {
             log.error(e.getMessage());
         } finally {
