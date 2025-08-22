@@ -41,12 +41,18 @@
     <loggers>
         <!-- 降低 flyway 的日志级别 -->
         <Logger name="org.flywaydb" level="ERROR">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!-- 降低 hikari 的日志级别 -->
+        <Logger name="com.zaxxer.hikari" level="ERROR">
+            <AppenderRef ref="RollingFile"/>
             <AppenderRef ref="Console"/>
         </Logger>
 
         <root level="${output_log_level}">
-            <appender-ref ref="RollingFile"/>
-            <appender-ref ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
         </root>
     </loggers>
 

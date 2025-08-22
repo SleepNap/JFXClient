@@ -173,4 +173,14 @@ public class DatabaseManager {
         }
         return MybatisFlexBootstrap.getInstance().getMapper(mapperClass);
     }
+
+    public StartDatabaseConfig getDefaultConfig() {
+        return StartDatabaseConfig.builder()
+                .remote(false)
+                .path("database/pgsql")
+                .url("jdbc:postgresql://localhost:5432/jfxclient")
+                .username("root")
+                .password("root")
+                .build();
+    }
 }

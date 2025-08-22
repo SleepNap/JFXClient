@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StartConfig {
-    private StartDatabaseConfig db;
-    private StartLogConfig log;
+public class StartLogConfig {
+    private String level;
 }

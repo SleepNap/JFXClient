@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.jc.common.AppContext;
 import org.jc.common.factory.ConfigFactory;
+import org.jc.main.core.database.DatabaseManager;
+import org.jc.main.core.log.LogManager;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -57,13 +59,8 @@ public class ConfigManager {
 
     private void loadDefaultConfig() {
         startConfig = StartConfig.builder()
-                .db(StartDatabaseConfig.builder()
-                        .remote(false)
-                        .path("database/pgsql")
-                        .url("jdbc:postgresql://localhost:5432/jfxclient")
-                        .username("root")
-                        .password("root")
-                        .build())
+                .db(DatabaseManager.getInstance().getDefaultConfig())
+                .log(LogManager.getInstance().getDefaultConfig())
                 .build();
     }
 

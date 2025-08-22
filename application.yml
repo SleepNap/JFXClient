@@ -10,3 +10,6 @@ jc:
     username: root
     # 数据库密码，可省略，默认root
     password: root
+  log:
+    # 日志级别，可省略，默认INFO
+    level: INFO

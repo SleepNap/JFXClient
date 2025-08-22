@@ -7,6 +7,7 @@ import org.jc.common.exception.UnauthedException;
 import org.jc.main.core.auth.AuthManager;
 import org.jc.main.core.config.ConfigManager;
 import org.jc.main.core.database.DatabaseManager;
+import org.jc.main.core.log.LogManager;
 
 import java.io.File;
 
@@ -34,6 +35,7 @@ public class AppManager {
     public void beforeStart() {
         startThread = Thread.startVirtualThread(() -> {
             ConfigManager.getInstance().loadStartConfig();
+            LogManager.getInstance().initConfigLevel();
             DatabaseManager.getInstance().initDataSource();
 
             loadFont();
